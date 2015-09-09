@@ -1,0 +1,53 @@
+<style>
+	th {
+		text-align: left;
+	}
+</style>
+
+<h1>Form</h1>
+
+<ul>
+	<li><a href="index.html">Home</a></li>
+	<li><a href="form.html">Form</a></li>
+	<li><a href="contact.html">Contact</a></li>
+</ul>
+
+<form method="post" action="/submit.pl">
+
+	<p>
+		<strong>Naam</strong>
+		<br>
+		<input type="text" name="name">
+	</p>
+
+	<p>
+		<strong>Geboortedatum</strong>
+		<br>
+		<table>
+			<thead>
+				<tr>
+					<th>Dag</th>
+					<th>Maand</th>
+					<th>Jaar</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<input type="number" min="1" max="30" value="1" name="birthdate-day">
+					</td>
+					<td>
+						<input type="number" min="1" max="12" value="1" name="birthdate-month">
+					</td>
+					<td>
+						<input type="number" min="1900" max="2015" value="2000" name="birthdate-year">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</p>
+
+	<p>
+		<input type="submit" value="submit">
+	</p>
+</form>
