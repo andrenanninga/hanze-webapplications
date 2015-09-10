@@ -5,6 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 
 public class HTTPRespons {
 	private OutputStream out;
@@ -20,15 +23,17 @@ public class HTTPRespons {
 
 	public void sendResponse() throws IOException {
 		byte[] bytes = new byte[HTTPSettings.BUFFER_SIZE];
-		FileInputStream fis = null;
+		FileInputStream fis = null;	
 		String fileName = request.getUri();
+		if(fileName.equals("/")){
+			fileName = "index.html";
+		}
 
 		try {		
 			File file = new File(HTTPSettings.DOC_ROOT, fileName);			
 			FileInputStream inputStream = getInputStream (file);
 			
-			if (file.exists()) out.write(getHTTPHeader(fileName)); 
-			else out.write(getHTTPHeader(""));
+			out.write(getHTTPHeader(fileName, file.exists())); 
 			
 			int ch = inputStream.read(bytes, 0, HTTPSettings.BUFFER_SIZE);
 			while (ch != -1) {
@@ -52,25 +57,41 @@ public class HTTPRespons {
 		  *** OPGAVE 4: 1b ***
 		  Stuur het bestand terug wanneer het bestaat; anders het standaard 404-bestand.
 		*/
-				
-		return fis;
+		try{
+		if(file.exists()){
+			fis = new FileInputStream(file);			
+		}else{
+			fis = new FileInputStream(new File(HTTPSettings.FILE_NOT_FOUND));
+		}}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+	   	return fis;
 		
 	}
 
-	private byte[] getHTTPHeader(String fileName) {
+	private byte[] getHTTPHeader(String fileName, boolean exists) {
 		String fileType = getFileType(fileName);		
-		String header = "Date: " + HTTPSettings.getDate() + "Server: Barts eigen server\r\n";
-
-		/*
-		 *** OPGAVE 4: 1b, 1c en 1d
-		   zorg voor een goede header:
-		   200 als het bestand is gevonden;
-		   404 als het bestand niet bestaat
-		   500 als het bestand wel bestaat maar niet van een ondersteund type is
-		   
-		   zorg ook voor ene juiste datum en tijd, de juiste content-type en de content-length.
-		*/
-
+		String header = "";
+		
+		if(!exists)
+		{
+			header = HTTPSettings.CODE_404;
+		}
+		else if(!Arrays.asList(HTTPSettings.ALLOWED_FILETYPES).contains(fileType)){
+			header = HTTPSettings.CODE_500;
+		}
+		else{
+			header = HTTPSettings.CODE_200;
+			
+		}
+		
+				
+		
+		header += "Date: " + HTTPSettings.getDate();
+		header += "Server: " + HTTPSettings.SERVER_NAME;
+		header += "\n";
+		
 		byte[] rv = header.getBytes();
 		return rv;
 	}
