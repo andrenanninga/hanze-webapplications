@@ -26,8 +26,11 @@ public class HTTPRespons {
 		FileInputStream fis = null;	
 		String fileName = request.getUri();
 		if(fileName.equals("/")){
-			fileName = "index.html";
+			fileName = "index.html";	
 		}
+		
+		ProcessBuilder builder = new ProcessBuilder();
+		
 
 		try {		
 			File file = new File(HTTPSettings.DOC_ROOT, fileName);			
@@ -52,17 +55,24 @@ public class HTTPRespons {
 	
 	private FileInputStream getInputStream (File file) {		
 		FileInputStream fis = null;
-		
+		System.out.printf("file naam is: " + file.getName() + "\n");
+		System.out.printf("file type is " + getFileType(file.getName()));
+
 		/*
 		  *** OPGAVE 4: 1b ***
 		  Stuur het bestand terug wanneer het bestaat; anders het standaard 404-bestand.
 		*/
 		try{
 		if(file.exists()){
-			fis = new FileInputStream(file);			
+			fis = new FileInputStream(file);
+			
+			if(!Arrays.asList(HTTPSettings.ALLOWED_FILETYPES).contains(getFileType(file.getAbsolutePath()))){
+				fis = new FileInputStream(new File(HTTPSettings.FILE_TYPE_UNSUPPORTED));
+			}
 		}else{
 			fis = new FileInputStream(new File(HTTPSettings.FILE_NOT_FOUND));
-		}}catch(Exception e){
+		}
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
@@ -86,8 +96,6 @@ public class HTTPRespons {
 			
 		}
 		
-				
-		
 		header += "Date: " + HTTPSettings.getDate();
 		header += "Server: " + HTTPSettings.SERVER_NAME;
 		header += "\n";
@@ -102,7 +110,6 @@ public class HTTPRespons {
 		if (i > 0 && i < fileName.length() - 1) {
 			ext = fileName.substring(i + 1);
 		}
-
 		return ext;
 	}
 

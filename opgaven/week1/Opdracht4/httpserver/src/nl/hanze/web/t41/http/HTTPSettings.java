@@ -10,6 +10,8 @@ public final class HTTPSettings {
 	
 	static final String DOC_ROOT = "F:/Users/Lasse/Documents/GitHub/hanze-webapplications/opgaven/week1/Opdracht4/httpserver/content/";
 	static final String FILE_NOT_FOUND = "F:/Users/Lasse/Documents/GitHub/hanze-webapplications/opgaven/week1/Opdracht4/httpserver/error/404.txt";
+	static final String FILE_TYPE_UNSUPPORTED = "F:/Users/Lasse/Documents/GitHub/hanze-webapplications/opgaven/week1/Opdracht4/httpserver/error/500.txt";
+
 	
 	static final int BUFFER_SIZE = 2048;	
 	static final int PORT_MIN=0;
@@ -21,7 +23,7 @@ public final class HTTPSettings {
 
 	static final String[] DAYS = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 	static final String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-	static final String[] ALLOWED_FILETYPES = {"html", "css", "js", "txt"};
+	static final String[] ALLOWED_FILETYPES = {"html", "css", "js", "txt", "gif", "png", "jpeg", "jpg", "pdf"};
 	
 	static final String CODE_200 = "HTTP/1.1 200 OK\r\n";
 	static final String CODE_404 = "HTTP/1.1 404 NOT FOUND\r\n";
