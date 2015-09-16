@@ -59,3 +59,7 @@ target/
 # Word temp files
 ~*.docx
 *.tmp
+
+# Node
+node_modules/
+build/Release

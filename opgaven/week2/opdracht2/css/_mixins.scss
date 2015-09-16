@@ -1,0 +1,16 @@
+@import "_variables.scss";
+
+@mixin flex() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin background($width, $height) {
+  background-image: $image;
+  background-size: $height $width;
+  background-position: center;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
