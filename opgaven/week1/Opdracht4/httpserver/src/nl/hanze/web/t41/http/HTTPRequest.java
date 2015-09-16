@@ -17,6 +17,11 @@ public class HTTPRequest {
 	public void setUri() {
 		int index1, index2;
 		String request = parseRequest();
+		
+		if(!request.toString().contains("GET")){
+			return;
+		}
+		
 		index1 = request.indexOf(' ');
 
 		if (index1 != -1) {
@@ -45,6 +50,8 @@ public class HTTPRequest {
 		for (int j = 0; j < i; j++) {
 			request.append((char) buffer[j]);
 		}
+		
+		System.out.println(request.toString());
 
 		return request.toString();
 	}

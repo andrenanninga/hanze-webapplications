@@ -25,12 +25,10 @@ public class HTTPRespons {
 		byte[] bytes = new byte[HTTPSettings.BUFFER_SIZE];
 		FileInputStream fis = null;	
 		String fileName = request.getUri();
+		
 		if(fileName.equals("/")){
 			fileName = "index.html";	
-		}
-		
-		ProcessBuilder builder = new ProcessBuilder();
-		
+		}	
 
 		try {		
 			File file = new File(HTTPSettings.DOC_ROOT, fileName);			
@@ -96,9 +94,11 @@ public class HTTPRespons {
 			
 		}
 		
-		header += "Date: " + HTTPSettings.getDate();
-		header += "Server: " + HTTPSettings.SERVER_NAME;
-		header += "\n";
+		header += "Date: " + HTTPSettings.getDate() 
+		+ "Server: " + HTTPSettings.SERVER_NAME
+		+	"Content-Type: " + HTTPSettings.DATATYPES.get(fileType) + "\r\n"
+		+	"Content-Length: " + (new File(HTTPSettings.DOC_ROOT, fileName)).length()
+		+ "\n\n";
 		
 		byte[] rv = header.getBytes();
 		return rv;

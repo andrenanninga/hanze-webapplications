@@ -24,6 +24,8 @@ public final class HTTPSettings {
 	static final String[] DAYS = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 	static final String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 	static final String[] ALLOWED_FILETYPES = {"html", "css", "js", "txt", "gif", "png", "jpeg", "jpg", "pdf"};
+	static final HashMap<String, String> DATATYPES = new HashMap<String, String>();	
+
 	
 	static final String CODE_200 = "HTTP/1.1 200 OK\r\n";
 	static final String CODE_404 = "HTTP/1.1 404 NOT FOUND\r\n";
