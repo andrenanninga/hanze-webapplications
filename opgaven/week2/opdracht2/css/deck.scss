@@ -1,0 +1,21 @@
+@import "_variables.scss";
+
+.deck {
+	width: 360px;
+
+  h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1em;
+    font-weight: bold;
+    font-weight: normal;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .cards {
+  	perspective: 2200px;
+  	transform-origin: 50% 50%;
+  	transform-style: preserve-3d;
+  }
+}
