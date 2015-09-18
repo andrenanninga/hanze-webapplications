@@ -11,14 +11,10 @@ class Card extends React.Component {
 			isMatched: false,
 			isOpen: false
 		};
-	}
 
-	handleMouseOver() {
-		// this.setState({ isHovering: true });
-	}
-
-	handleMouseOut() {
-		// this.setState({ isHovering: false });
+		if(this.props.open !== undefined) {
+			this.state.isOpen = this.props.open;
+		}
 	}
 
 	handleClick(e) {
@@ -33,10 +29,9 @@ class Card extends React.Component {
 			{ 'open': this.state.isOpen || this.state.isMatched }
 		);
 
-		return <div className={classes} ref={this.props.key}
-					 onMouseOver={this.handleMouseOver.bind(this)} 
-					 onMouseOut={this.handleMouseOut.bind(this)}
-					 onClick={this.handleClick.bind(this)}>
+		return <div className={classes} 
+		            ref={this.props.key}
+					      onClick={this.handleClick.bind(this)}>
 				<div className="front">
 					<FontAwesome name={this.props.icon} />
 					<h2>{this.props.name}</h2>

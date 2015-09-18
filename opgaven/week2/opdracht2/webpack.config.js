@@ -9,9 +9,12 @@ module.exports = {
 		path: __dirname + '/build',
 		filename: 'bundle.js'
 	},
+	resolve: {
+		extensions: ['', '.js', '.jsx']
+	},
 	module: {
 		loaders: [
-			{ test: /\.jsx?$/, loaders: ['react-hot', 'babel'], exclude: /node_modules/ },
+			{ test: /\.jsx?$/, loaders: ['react-hot', 'babel', 'babel-loader'], exclude: /node_modules/ },
 			{ test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
 			{ test: /\.scss$/, loader: 'style!css!sass' },
 			{ test: /\.css$/, loader: 'style!css' }
