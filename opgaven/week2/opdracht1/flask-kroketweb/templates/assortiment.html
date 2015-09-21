@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html> 
+  <head>
+  <meta charset="UTF-8"/>
+  <title>Welkom bij KroketWeb - Bestel je vette hap online</title>
+  <link href="../static/css/default.css" rel="stylesheet" type="text/css"/>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+  </head>
+
+  <body>
+    <div class="top"> <img src="../static/images/logo.jpg" alt=""> </div>
+
+
+  <nav class="left">
+    <span class="sponsortitle"> Menu </span>
+    <ul class="sponsorlist">
+      <li><a href="/">Home</a><li>
+      <li><a href="#" class="active">Assortiment</a></li>
+      <li><a href="afrekenen">Afrekenen</a></li>
+    </ul>
+  </nav>
+
+<div class="middle">
+ <h3>Overzicht producten</h3>
+
+
+
+
+
+<div id="berichtenNavigatie">
+</div>
+<table class="producten">
+
+<thead>
+  <th>Product</th>
+  <th>Prijs (euro)</th>
+  <th>Op voorraad</th>
+  <th>Bestelling</th>
+</thead>
+
+ <tbody>
+<td>abc</td>
+<td>abc</td>
+ </tbody>
+ 
+</table>
+
+<form>
+<table>
+  <tr>
+  <td>Producten per pagina</td>
+
+  <td><select name="getpage">
+        <option value=" "> </option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+  </select></td>
+
+  <td><b>1</b> | 2 | 3 | ...</td>
+  </tr>
+</table>
+</form>
+
+</div>
+
+<aside class="right"> 
+  <span class="sponsortitle"> Sponsors </span>
+
+    <ul class="sponsorlist">
+      <li><a href="http://www.remia.nl">Lemia: Vool de lekkelste flietsaus</a></li>
+      <li><a href="http://www.mola.nl">Mola snacks: eerlijk en lekker</a></li>
+      <li><a href="http://www.arts.nl">Sonya Backer: Snacken is gezond</a></li>
+    </ul>
+
+
+  <h3>Inhoud winkelmandje</h3>
+  <table class="cart" border="1">
+    <thead>
+      <tr>
+        <th>Artikel</th>
+        <th>Aantal</th>
+        <th>Prijs per stuk</th>
+        <th>Totaalprijs</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+  </table>
+</aside>
+<script>
+    $(function() {
+        $.ajax({
+            url: '/getProducts',
+            type: 'GET',
+            success: function(res) {
+              var JSONString = JSON.parse(res);
+              console.log(JSONString[0])
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+</script>
+  <script src="../static/js/cart.js"></script>
+</body>
+</html>

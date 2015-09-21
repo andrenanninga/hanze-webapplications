@@ -88,3 +88,24 @@ function renderCartTotalPrice() {
 
 }
 
+function renderProducts(){
+   var tbody = document.querySelector("table.producten");
+   tbody.innerHTML("");
+   var row = document.createElement("tr");
+
+    var col = document.createElement("td");
+    col.innerHTML = "Prijs totale bestelling";
+    row.appendChild(col);
+
+    var col = document.createElement("td");
+    col.innerHTML = totalsum;
+    row.appendChild(col);
+
+    tbody.appendChild(row);
+
+    // for (var key in sessionStorage) {
+    //     var product = JSON.parse(sessionStorage[key]);
+    //     tbody.appendChild(renderCartEntry(product));
+    // }
+}
+
