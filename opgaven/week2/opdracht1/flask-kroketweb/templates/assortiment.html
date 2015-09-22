@@ -38,14 +38,9 @@
   <th>Op voorraad</th>
   <th>Bestelling</th>
 </thead>
-
  <tbody>
-<td>abc</td>
-<td>abc</td>
  </tbody>
- 
 </table>
-
 <form>
 <table>
   <tr>
@@ -96,8 +91,7 @@
             url: '/getProducts',
             type: 'GET',
             success: function(res) {
-              var JSONString = JSON.parse(res);
-              console.log(JSONString[0])
+              renderProducts(res);
             },
             error: function(error) {
                 console.log(error);
@@ -106,5 +100,6 @@
     });
 </script>
   <script src="../static/js/cart.js"></script>
+  <script src="../static/js/products.js"></script>  
 </body>
 </html>

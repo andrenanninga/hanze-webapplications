@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Welkom bij KroketWeb - Bestel je vette hap online</title>
+    <link href="css/default.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<div class="top"><img src="images/logo.jpg" alt=""></div>
+
+
+<nav class="left">
+    <span class="sponsortitle"> Menu </span>
+    <ul class="sponsorlist">
+        <li><a href="index.html">Home</a>
+        <li>
+        <li><a href="assortiment.html">Assortiment</a></li>
+        <li><a href="afrekenen.html" class="active">Afrekenen</a></li>
+    </ul>
+</nav>
+
+
+<div class="middle">
+    <h3>Afrekenen</h3>
+
+    <form>
+        <fieldset>
+            <legend>Inhoud winkelwagen</legend>
+            <table class="cart" border="1">
+                <thead>
+                <tr>
+                    <th>Artikel</th>
+                    <th>Aantal</th>
+                    <th>Prijs per stuk</th>
+                    <th>Totaalprijs</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </fieldset>
+
+        <br/>
+
+        <fieldset>
+            <legend>Bezorggegevens</legend>
+            <table>
+                <tr>
+                    <td>Naam</td>
+                    <td><input type="text" name="myInput" size="20"></td>
+                </tr>
+
+                <tr>
+                    <td>Straat + nr</td>
+                    <td><input type="text" name="myInput2" size="20"></td>
+                </tr>
+
+                <tr>
+                    <td>Plaats</td>
+                    <td><input type="text" name="myInput3" size="20"></td>
+                </tr>
+
+                <tr>
+                    <td>Telefoonnummer</td>
+                    <td><input type="text" maxlength=10 name="area"></td>
+                </tr>
+            </table>
+        </fieldset>
+        <br/>
+
+        <input type="button" value="Plaats bestelling"/>
+    </form>
+</div>
+
+
+<aside class="right">
+    <span class="sponsortitle"> Sponsors </span>
+    <ul class="sponsorlist">
+        <li><a href="http://www.remia.nl">Lemia: Vool de lekkelste flietsaus</a></li>
+        <li><a href="http://www.mola.nl">Mola snacks: eerlijk en lekker</a></li>
+        <li><a href="http://www.arts.nl">Sonya Backer: Snacken is gezond</a></li>
+    </ul>
+</aside>
+<script src="js/cart.js"></script>
+</body>
+</html>
