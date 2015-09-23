@@ -1,0 +1,22 @@
+@import "_variables.scss";
+
+@mixin flex() {
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+}
+
+@mixin background($width, $height) {
+  background-image: $colorSquareImage;
+  background-position: center;
+  background-size: $width $height;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+@mixin patternBackground() {
+  background-image: $patternImage;
+  background-position: center;
+  -webkit-filter: blur(0.5px);
+}
