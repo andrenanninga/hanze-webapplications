@@ -1,9 +1,6 @@
-renderCart();
-var totalsum;
 var cart = {};
-var inputs = document.querySelectorAll(".producten input");
 
-inputs = Array.prototype.slice.call(inputs);
+function inputAddEventListeners(inputs){
 inputs.forEach(function (input) {
     input.addEventListener("focusout", function (e) {
 
@@ -30,12 +27,13 @@ inputs.forEach(function (input) {
         else {
             delete cart[product];
             sessionStorage.removeItem(product);
-
-        }
+            totalsum = 0;
+             }
 
         renderCart(cart);
     });
 });
+};
 
 function renderCart() {
     var tbody = document.querySelector("table.cart tbody");
@@ -60,9 +58,11 @@ function renderCartEntry(cartItem) {
         cartItem.total
     ];
 
-    console.log("nummer");
-    totalsum += parseFloat(cartItem.total.replace(",", "."));
+    console.log(cartItem.total);
+    console.log(totalsum)
 
+    totalsum += parseFloat(cartItem.total);
+    totalsum = parseFloat(totalsum.toFixed(3));
 
     columns.forEach(function (column) {
         var col = document.createElement("td");

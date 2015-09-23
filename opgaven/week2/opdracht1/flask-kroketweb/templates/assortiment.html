@@ -85,21 +85,8 @@
     </tbody>
   </table>
 </aside>
-<script>
-    $(function() {
-        $.ajax({
-            url: '/getProducts',
-            type: 'GET',
-            success: function(res) {
-              renderProducts(res);
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    });
-</script>
-  <script src="../static/js/cart.js"></script>
-  <script src="../static/js/products.js"></script>  
+
+  <script type='text/javascript' src="../static/js/cart.js"></script>
+  <script type='text/javascript' src="../static/js/products.js"></script>  
 </body>
 </html>
