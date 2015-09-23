@@ -1,26 +1,52 @@
-var webpack = require('webpack');
+'use strict';
+
+var webpack           = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var path              = require('path');
+
+var srcPath    = path.join(__dirname, 'src/client');
+var buildPath  = path.join(__dirname, 'build');
+var modulePath = path.join(srcPath, 'module.js');
+var indexPath  = path.join(srcPath, 'index.html');
 
 module.exports = {
-	entry: [
-		'webpack/hot/only-dev-server',
-		'./js/app.js'
-	],
-	output: {
-		path: __dirname + '/build',
-		filename: 'bundle.js'
+	target: 'web',
+	cache: true,
+	entry: {
+		module: modulePath,
+		common: ['react', 'react-router', 'alt']
 	},
 	resolve: {
-		extensions: ['', '.js', '.jsx']
+		root: srcPath,
+		extensions: ['', '.js', '.scss'],
+		modulesDirections: ['node_modules', 'src']
+	},
+	output: {
+		path: buildPath,
+		publicPath: '',
+		filename: '[name].js',
+		libary: ['Example', '[name]'],
+		pathInfo: true 
 	},
 	module: {
 		loaders: [
-			{ test: /\.jsx?$/, loaders: ['react-hot', 'babel', 'babel-loader'], exclude: /node_modules/ },
-			{ test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
+			{test: /\.js?$/, exclude: /node_modules/, loader: 'babel?cacheDirectory'},
 			{ test: /\.scss$/, loader: 'style!css!sass' },
 			{ test: /\.css$/, loader: 'style!css' }
 		]
 	},
 	plugins: [
+		new webpack.optimize.CommonsChunkPlugin('common', 'common.js'),
+		new HtmlWebpackPlugin({
+			inject: true,
+			template: indexPath
+		}),
 		new webpack.NoErrorsPlugin()
-	]
+	],
+	debug: true,
+	devtool: 'eval-cheap-module-source-map',
+	devServer: {
+		contentBase: buildPath,
+		historyApiFallback: true
+	}
 };

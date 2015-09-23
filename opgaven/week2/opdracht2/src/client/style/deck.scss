@@ -1,0 +1,48 @@
+@import "_variables.scss";
+
+.deck {
+
+	padding: 40px 0;
+
+	> h1 {
+		font-family: 'Montserrat', sans-serif;
+		font-size: 2em;
+		font-weight: bold;
+		font-weight: normal;
+		text-align: center;
+		text-transform: uppercase;
+		margin: 1em 0;
+		color: #fff;
+	}
+
+	> span {
+		right: 0;
+		top: 0;
+		margin: calc(1em - 8px) 4px;
+		font-size: 1.1em;
+		color: #FFF;
+		background-color: rgba(0, 0, 0, 0.4);
+		padding: 8px 10px;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
+	.cards {
+		perspective: 2200px;
+		transform-origin: 50% 50%;
+		transform-style: preserve-3d;
+		margin: 0 auto;
+	}
+	&.small .cards {
+		width: calc(90px * 2);
+		// height: calc(110px * 2);
+	}
+	&.medium .cards {
+		width: calc(90px * 4);
+		// height: calc(110px * 4);
+	}
+	&.large .cards {
+		width: calc(90px * 6);
+		// height: calc(110px * 6);
+	}
+}
