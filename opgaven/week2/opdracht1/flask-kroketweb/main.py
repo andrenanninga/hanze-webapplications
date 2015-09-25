@@ -9,7 +9,7 @@ mysql = MySQL()
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'toor'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_DB'] = 'kroketweb'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -63,7 +63,7 @@ def showPayment():
     return render_template('afrekenen.html')
 
 
-@app.route('/signUp', methods=['POST'])
+@app.route('/sendOrder', methods=['POST'])
 def signUp():
     try:
         # read the posted values from the UI

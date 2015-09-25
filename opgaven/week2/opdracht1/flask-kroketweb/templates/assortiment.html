@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <title>Welkom bij KroketWeb - Bestel je vette hap online</title>
   <link href="../static/css/default.css" rel="stylesheet" type="text/css"/>
-  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="../static/js/jquery.js"></script>
 
   </head>
 
@@ -47,13 +47,12 @@
   <td>Producten per pagina</td>
 
   <td><select name="getpage">
-        <option value=" "> </option>
-        <option value="5">5</option>
-        <option value="10">10</option>
         <option value="15">15</option>
+        <option value="10">10</option>
+        <option value="5">5</option>
   </select></td>
 
-  <td><b>1</b> | 2 | 3 | ...</td>
+  <td class="productpagina"></td>
   </tr>
 </table>
 </form>
@@ -87,6 +86,9 @@
 </aside>
 
   <script type='text/javascript' src="../static/js/cart.js"></script>
-  <script type='text/javascript' src="../static/js/products.js"></script>  
+  <script type='text/javascript' src="../static/js/products.js"></script> 
+  <script>
+  getProducts();
+  </script> 
 </body>
 </html>

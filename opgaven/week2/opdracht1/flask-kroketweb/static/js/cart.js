@@ -3,6 +3,7 @@ var cart = {};
 function inputAddEventListeners(inputs){
 inputs.forEach(function (input) {
     input.addEventListener("focusout", function (e) {
+        totalsum = 0;
 
         if (!this.value.match(/^[0-9]+$/)) {
             this.value = "";
@@ -27,10 +28,9 @@ inputs.forEach(function (input) {
         else {
             delete cart[product];
             sessionStorage.removeItem(product);
-            totalsum = 0;
              }
 
-        renderCart(cart);
+        renderCart();
     });
 });
 };
@@ -42,11 +42,17 @@ function renderCart() {
         tbody.removeChild(tbody.lastChild);
     }
 
-    for (var key in sessionStorage) {
-        var product = JSON.parse(sessionStorage[key]);
-        tbody.appendChild(renderCartEntry(product));
+    if(sessionStorage.length > 0 )
+    {
+        for (var key in sessionStorage) {
+            var product = JSON.parse(sessionStorage[key]);
+            console.log(product)
+            tbody.appendChild(renderCartEntry(product));
+        }
+        tbody.appendChild(renderCartTotalPrice());
+    }else{
+         tbody.appendChild(document.createElement("td"));
     }
-    tbody.appendChild(renderCartTotalPrice());
 }
 
 function renderCartEntry(cartItem) {
@@ -57,9 +63,6 @@ function renderCartEntry(cartItem) {
         cartItem.price,
         cartItem.total
     ];
-
-    console.log(cartItem.total);
-    console.log(totalsum)
 
     totalsum += parseFloat(cartItem.total);
     totalsum = parseFloat(totalsum.toFixed(3));
