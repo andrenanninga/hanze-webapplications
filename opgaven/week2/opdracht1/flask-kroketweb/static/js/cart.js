@@ -91,4 +91,61 @@ function renderCartTotalPrice() {
 
 }
 
+$(function() {
+    $('#btnAfrekenen').click(function() {
+        
+        $.ajax({
+            url: '/sendOrder',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
 
+       CREATE TABLE `kroketweb`.`customer` (
+  `user_id` BIGINT NULL AUTO_INCREMENT,
+  `user_name` VARCHAR(45) NULL,
+  `user_address` VARCHAR(45) NULL,
+  `user_city` VARCHAR(45) NULL,
+  `user_phonenumber` VARCHAR(45) NULL,
+  PRIMARY KEY (`user_id`));
+
+
+  DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_createCustomer`(
+    IN p_name VARCHAR(20),
+    IN p_address VARCHAR(20),
+    IN p_city VARCHAR(20),
+    IN p_phonenumber VARCHAR(20)
+)
+BEGIN
+    if ( select exists (select 1 from customer where user_username = p_username) ) THEN
+     
+        select 'Username Exists !!';
+     
+    ELSE
+     
+        insert into customer
+        (
+            user_name,
+            user_address,
+            user_city,
+            user_phonenumber
+        )
+        values
+        (
+            p_name,
+            p_address,
+            p_city,
+            p_phonenumber
+        );
+     
+    END IF;
+END$$
+DELIMITER ;

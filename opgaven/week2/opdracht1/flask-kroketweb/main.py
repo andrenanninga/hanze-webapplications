@@ -68,16 +68,16 @@ def signUp():
     try:
         # read the posted values from the UI
         _name = request.form['inputName']
-        _email = request.form['inputEmail']
-        _password = request.form['inputPassword']
+        _address = request.form['inputAddrress']
+        _city = request.form['inputCity']
+        _phoneNumber = request.form['inputNumber']
 
         # validate the received values
-        if _name and _email and _password:
+        if _name and _address and _city and _phoneNumber:
             conn = mysql.connect()
             cursor = conn.cursor()
-            _hashed_password = generate_password_hash(_password)
-            cursor.callproc('sp_createUser',
-                            (_name, _email, _hashed_password))
+            cursor.callproc('sp_createCustomer',
+                            (_name, _address, _city, _phoneNumber))
             data = cursor.fetchall()
 
             if len(data) is 0:
