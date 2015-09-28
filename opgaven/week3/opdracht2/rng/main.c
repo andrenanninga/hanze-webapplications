@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Bart Barnard. All rights reserved.
 //
 
+#include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <mysql.h>
@@ -16,27 +17,43 @@
 #include "main.h"
 
 
-MYSQL *connection, mysql;
+MYSQL *connection;
 
 int main (int argc, const char * argv[]) {
-    mysql_init(&mysql);
-    connection = mysql_real_connect(&mysql,"localhost","<<USER>>","<<PASSWD>>","nrg",0,0,0);
+    connection = mysql_init(NULL);
     
-    if (connection == NULL) {
-        printf("Oh Noes!\n");
-        return 0;
-    } else {
-        printf("Connected to database.\n");
+    char mysql_server[100];
+    char mysql_user[100];
+    char mysql_password[100];
+
+    printf("mysql server locatie: ");
+    scanf("%99s", mysql_server);
+    printf("mysql user: ");
+    scanf("%99s", mysql_user);
+    printf("mysql password: ");
+    scanf("%99s", mysql_password);
+
+    if(connection == NULL) {
+        fprintf(stderr, "%s\n", mysql_error(connection));
+        exit(1);
+    } 
+
+    if(mysql_real_connect(connection, mysql_server, mysql_user, mysql_password, "nrg", 0, 0, 0) == NULL) {
+        fprintf(stderr, "%s\n", mysql_error(connection));
+        mysql_close(connection);
+        exit(1);
     }
+
+    printf("\nConnected to database.\n");
     
     time_t t;
     srand((unsigned int)time(&t));
     
     int aantal;
     int apparaten;
-    printf("Aantal huidhoudens: ");
+    printf("Aantal huishoudens: ");
     scanf("%d", &aantal);
-    printf("Maxiamaal aantal apparaten per huishouden:");
+    printf("Maximaal aantal apparaten per huishouden: ");
     scanf("%d", &apparaten);
     
     create_nrg_database(aantal, apparaten);
@@ -46,11 +63,35 @@ int main (int argc, const char * argv[]) {
 }
 
 void create_nrg_database(int huishoudens, int max_apparaten) {
-  // OPGAVE 2.3 VAN WEEK 2
-  // Je hoeft er niet per se voor te zorgen dat er maar één exemplaar
-  // van een type apparaat aan een huishouden wordt toegekend (het mag
-  // uiteraard wel, maar voegt weinig toe aan de algemene functionaliteit
-  // of leerdoelen).
+    // OPGAVE 2.3 VAN WEEK 2
+    // Je hoeft er niet per se voor te zorgen dat er maar één exemplaar
+    // van een type apparaat aan een huishouden wordt toegekend (het mag
+    // uiteraard wel, maar voegt weinig toe aan de algemene functionaliteit
+    // of leerdoelen).
+
+    printf("Aanmaken van %d huishoudens\n", huishoudens);
+
+    int i;
+    int j;
+
+    for(i = 0; i < huishoudens; i++) {
+        int huishouden = create_huishouden();
+        printf("huishouden %d aangemaakt\n", huishouden);
+
+        int aantal_apparaten = randomNr(1, max_apparaten, -1);
+        printf("%d apparaten toevoegen aan huishouden: %d\n", aantal_apparaten, huishouden);
+
+        for(j = 0; j < aantal_apparaten; j++) {
+            int apparaat = apparaat_voor_huishouden(huishouden);
+        
+            printf("metingen voor apparaat: %d\n", apparaat);
+            meting_voor_apparaat(apparaat);
+        }
+    }
+
+    printf("%d huishoudens aangemaakt\n", huishoudens);
+
+    return;
 }
 
 void meting_voor_apparaat(int avh) {
@@ -95,7 +136,7 @@ int apparaat_voor_huishouden(int huishouden) {
 int create_huishouden() {
     int huisnummer;
     int grootte;
-    
+
     mysql_query(connection, "select postcode,minnumber,maxnumber,numbertype from postcode order by rand() limit 1");
     MYSQL_RES *rv = mysql_store_result(connection);
     MYSQL_ROW strtData = mysql_fetch_row(rv);

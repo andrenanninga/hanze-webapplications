@@ -66,3 +66,6 @@ build/Release
 
 # Intellij
 .idea
+
+# Visual Studio
+.vs
