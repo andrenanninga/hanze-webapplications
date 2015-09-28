@@ -5,6 +5,12 @@
 //  Created by Bart Barnard.
 //  Copyright (c) 2015 Bart Barnard. All rights reserved.
 //
+//  Compile windows 10 64bit
+// 
+//  VS2015 x64 Native Tools Command Prompt
+//  cd <dir>/
+//  cl main.c /I "C:\Program Files\MySQL\MySQL Server 5.6\include" /MD "C:\Program Files\MySQL\MySQL Server 5.6\lib\libmysql.lib"
+//
 
 #include <windows.h>
 #include <stdio.h>
