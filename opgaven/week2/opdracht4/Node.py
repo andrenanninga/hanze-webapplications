@@ -1,29 +1,60 @@
 __author__ = 'Lasse'
 
-
 class Node:
-    def __init__(self, name, left=None, right=None):
-        self._name = name
-        self.left = left
-        self.right = right
+
+    parent = None
+    name = None
+    children = []
+
+    def __init__(self, name, parent=None):
+        self.name = name
+        # self.left = left
+        # self.right = right
+        self.children = []
+        self.parent = parent
 
     def __str__(self):
-        return str(self.cargo)
+        return str(self.name)
 
-    def performAction(self, depth):
-        print(" " * depth, self._name)
+    def performAction(self, depth=0, tree=""):
+        info = " " * depth + "My name is " + self.name + " "
+        tree += " " * depth + self.name
 
+        if self.parent is not None and len(self.parent.children) == 2:
+            info += "and I have a sibling "
+        else:
+            info += "and I do not have a sibling "
 
-def traverse(node, depth=0):
-    if node == None: return
-    node.performAction(depth)
-    traverse(node.left, depth + 1)
-    traverse(node.right, depth + 1)
+        if len(self.children) > 0:
+            info += "and I have a childNode"
+        else:
+            info += "and I do not have a childNode"
+
+        print(info)
+        for child in self.children:
+            child.performAction(depth + 1)
+
+    def add(self, node):
+        node.parent = self;
+        self.children.append(node)
 
 
 if __name__ == "__main__":
-    tetanurae = Node("tetanurae", Node("coelurosauria", Node("T-Rex"), Node("Eend")))
-    ceratosauria = Node("ceratosauria", Node("coelophysoi"), Node("abelisauroi"))
-    theropodia = Node("theropodia", ceratosauria, tetanurae)
+    theropodia = Node("theropodia")
+    ceratosauria = Node("ceratosauria")
+    coelophysoi = Node("coelophysoi")
+    abelisauroi = Node("abelisauroi")
+    tetanurae = Node("tetanurae")
+    coelurosauria = Node("coelurosauria")
+    trex = Node("T-rex")
+    eend = Node("Eend")
 
-traverse(theropodia)
+    theropodia.add(ceratosauria)
+    theropodia.add(tetanurae)
+    ceratosauria.add(coelophysoi)
+    ceratosauria.add(abelisauroi)
+    tetanurae.add(coelurosauria)
+    coelurosauria.add(trex)
+    coelurosauria.add(eend)
+
+    theropodia.performAction()
