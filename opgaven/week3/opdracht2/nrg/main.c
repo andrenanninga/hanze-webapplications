@@ -39,7 +39,7 @@ int main (int argc, const char * argv[]) {
     printf("mysql password: ");
     scanf("%99s", mysql_password);
 
-    if(connection == NULL) {
+    if(connection == NULL) {w
         fprintf(stderr, "%s\n", mysql_error(connection));
         exit(1);
     } 
