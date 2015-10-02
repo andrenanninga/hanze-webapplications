@@ -1,11 +1,13 @@
-from flask import Flask, render_template, request, json
+from flask import Flask, render_template, request, json, redirect, session
 from login import login
 from flask.ext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
-
+import os
 __author__ = 'Lasse'
 
 app = Flask(__name__)
+
+app.secret_key = os.urandom(24)
 # app.register_blueprint(login)
 mysql = MySQL()
 
@@ -31,6 +33,40 @@ def showLogin():
 def showSignUp():
     return render_template('aanmelden.html')
 
+@app.route('/userHome')
+def userHome():
+    if session.get('user'):
+        return render_template('userHome.html')
+    else:
+        return render_template('error.html',error = 'Unauthorized Access')
+
+@app.route('/logout')
+def logout():
+    session.pop('user',None)
+    return redirect('/')
+
+@app.route('/showHouseholds')
+def showHouseHolds():
+    try:
+        if session.get('user'):
+            _user = session.get('user')
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.callproc('sp_getHouseholdByUser', [_user])
+            result = cursor.fetchone()
+            household = {
+                'id': result[0],
+                'postcode': result[1],
+                'huisnummer': result[2],
+                'grootte': result[3],
+            }
+
+            return render_template('households.html', household=household)
+        else:
+            return render_template('error.html', error='Unauthorized Access')
+    except Exception as e:
+        return render_template('error.html', error=str(e))
 
 @app.route('/signUp', methods=['POST'])
 def signUp():
@@ -45,14 +81,19 @@ def signUp():
         if _name and _email and _password and _phoneNumber:
             conn = mysql.connect()
             cursor = conn.cursor()
-            _hashed_password = generate_password_hash(_password)
+            # _hashed_password = generate_password_hash(_password)
             cursor.callproc('sp_createUser',
-                            (_name, _email, _hashed_password, _phoneNumber))
+                            (_name, _email, _password, _phoneNumber))
             data = cursor.fetchall()
 
             if len(data) is 0:
                 conn.commit()
-                return json.dumps({'message': 'User created successfully !'})
+                cursor.callproc('sp_validateLogin', (_email,))
+                data = cursor.fetchall()
+                if _password == str(data[0][3]):
+                    session['user'] = data[0][0]
+
+                return redirect('/userHome')
             else:
                 return json.dumps({'error': str(data[0])})
         else:
@@ -68,20 +109,20 @@ def signUp():
 @app.route('/validateLogin', methods=['POST'])
 def validateLogin():
     try:
-        _username = request.form['inputEmail']
+        _email = request.form['inputEmail']
         _password = request.form['inputPassword']
 
         # connect to mysql
 
         con = mysql.connect()
         cursor = con.cursor()
-        cursor.callproc('sp_validateLogin', (_username,))
+        cursor.callproc('sp_validateLogin', (_email,))
         data = cursor.fetchall()
 
         if len(data) > 0:
-            if check_password_hash(str(data[0][3]), _password):
+            if _password == str(data[0][3]):
                 session['user'] = data[0][0]
-                return redirect('/homeUser')
+                return redirect('/userHome')
             else:
                 return render_template('error.html', error='Wrong Email address or Password.')
         else:
@@ -95,30 +136,7 @@ def validateLogin():
         con.close()
 
 
-@app.route('/getHouseholdsdByUser', methods=['POST'])
-def getHouseholdsdByUser():
-    try:
-        if session.get('user'):
 
-            _id = request.form['userID']
-            _user = session.get('user')
-
-            conn = mysql.connect()
-            cursor = conn.cursor()
-            cursor.callproc('sp_GetHouseholdsByUser', (_id, _user))
-            result = cursor.fetchone()
-            households = []
-
-            while result is not None:
-                households.append(
-                    {'Id': result[0][0], 'postcode': result[0][1], 'huisnummer': result[0][2], 'grootte': result[0][3]})
-                result = cursor.fetchone()
-
-            return json.dumps(households)
-        else:
-            return render_template('error.html', error='Unauthorized Access')
-    except Exception as e:
-        return render_template('error.html', error=str(e))
 
 @app.route('/getDevicesByHouseHold', methods=['POST'])
 def getDevicesByHouseHold():
@@ -129,7 +147,7 @@ def getDevicesByHouseHold():
 
             conn = mysql.connect()
             cursor = conn.cursor()
-            cursor.callproc('sp_GetDevicesByHousehold', (_household))
+            cursor.callproc('sp_getDevicesByHousehold', (_household))
             result = cursor.fetchone()
             households = []
 
@@ -152,7 +170,7 @@ def getDevices():
 
             conn = mysql.connect()
             cursor = conn.cursor()
-            cursor.callproc('sp_GetDevices')
+            cursor.callproc('sp_getDeviceById')
             result = cursor.fetchone()
             devices = []
 

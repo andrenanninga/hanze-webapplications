@@ -25,7 +25,7 @@
       
       <div class="jumbotron">
         <h1>NRG Web</h1>
-        <form class="form-signin">
+        <form class="form-signin" action="/signUp" method="POST">
           <label for="inputName" class="sr-only">Name</label>
           <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Naam" required autofocus>
           <label for="inputEmail" class="sr-only">Email adres</label>
@@ -35,7 +35,7 @@
           <label for="inputPhonenumber" class="sr-only">Telefoonnummer</label>
           <input type="number" name="inputPhonenumber" id="inputPhonenumber" class="form-control" placeholder="Telefoonnummer" required>
           <p></p>
-          <button id="btnSignUp" class="btn btn-lg btn-primary btn-block-small" type="button">Aanmelden</button>
+          <input type="submit" id="btnSignUp" class="btn btn-lg btn-primary btn-block-small" value="Aanmelden">
         </form>
       </div>
       <footer class="footer">
@@ -43,22 +43,22 @@
       </footer>
     </div>
     <script type="text/javascript">
-    $(function() {
-    $('#btnSignUp').click(function() {
+    // $(function() {
+    // $('#btnSignUp').click(function() {
     
-    $.ajax({
-    url: '/signUp',
-    data: $('form').serialize(),
-    type: 'POST',
-    success: function(response) {
-    console.log(response);
-    },
-    error: function(error) {
-    console.log(error);
-    }
-    });
-    });
-    });
+    // $.ajax({
+    // url: '/signUp',
+    // data: $('form').serialize(),
+    // type: 'POST',
+    // success: function(response) {
+    // console.log(response);
+    // },
+    // error: function(error) {
+    // console.log(error);
+    // }
+    // });
+    // });
+    // });
     </script>
   </body>
 </html>
