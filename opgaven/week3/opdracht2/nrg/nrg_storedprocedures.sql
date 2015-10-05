@@ -78,3 +78,20 @@ BEGIN
 END$$
  
 DELIMITER ;
+
+DROP procedure IF EXISTS `sp_getDevicesByUser`;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getDevicesByUser`(
+	IN p_gebruiker_fk INT(10)
+
+)
+BEGIN
+
+select naam from apparaat 
+	LEFT JOIN apparaat_huishouden on apparaat.id = apparaat_huishouden.apparaat_fk
+    LEFT JOIN huishouden on huishouden.id = apparaat_huishouden.huishouden_fk
+    
+    WHERE huishouden.gebruiker_fk= p_gebruiker_fk;
+   
+END$$
+DELIMITER ;

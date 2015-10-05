@@ -1,14 +1,12 @@
-from flask import Flask, render_template, request, json, redirect, session
-from login import login
-from flask.ext.mysql import MySQL
-from werkzeug import generate_password_hash, check_password_hash
+from app import app
 import os
+from flask import Flask, render_template, request, json, redirect, session
+
+from flask.ext.mysql import MySQL
+
 __author__ = 'Lasse'
 
-app = Flask(__name__)
-
 app.secret_key = os.urandom(24)
-# app.register_blueprint(login)
 mysql = MySQL()
 
 # MySQL configurations
@@ -33,40 +31,20 @@ def showLogin():
 def showSignUp():
     return render_template('aanmelden.html')
 
+
 @app.route('/userHome')
 def userHome():
     if session.get('user'):
         return render_template('userHome.html')
     else:
-        return render_template('error.html',error = 'Unauthorized Access')
+        return render_template('error.html', error='Unauthorized Access')
+
 
 @app.route('/logout')
 def logout():
-    session.pop('user',None)
+    session.pop('user', None)
     return redirect('/')
 
-@app.route('/showHouseholds')
-def showHouseHolds():
-    try:
-        if session.get('user'):
-            _user = session.get('user')
-
-            conn = mysql.connect()
-            cursor = conn.cursor()
-            cursor.callproc('sp_getHouseholdByUser', [_user])
-            result = cursor.fetchone()
-            household = {
-                'id': result[0],
-                'postcode': result[1],
-                'huisnummer': result[2],
-                'grootte': result[3],
-            }
-
-            return render_template('households.html', household=household)
-        else:
-            return render_template('error.html', error='Unauthorized Access')
-    except Exception as e:
-        return render_template('error.html', error=str(e))
 
 @app.route('/signUp', methods=['POST'])
 def signUp():
@@ -136,6 +114,47 @@ def validateLogin():
         con.close()
 
 
+@app.route('/showHouseholds')
+def showHouseHolds():
+    try:
+        # if session.get('user'):
+        #     _user = session.get('user')
+        # TODO change this to user
+        _user = '66'
+        session['user'] = _user
+
+        conn = mysql.connect()
+        cursor = conn.cursor()
+
+        # Get household with userID
+        cursor.execute('select * from huishouden where gebruiker_fk =%s' % (_user))
+        result = cursor.fetchone()
+
+        # Set householdID for session
+        session['householdID'] = result[0]
+        household = {
+            'postcode': result[3],
+            'huisnummer': result[2],
+            'grootte': result[1],
+        }
+
+        cursor.callproc('sp_getDevicesByUser', [_user])
+        result = cursor.fetchall()
+
+        devices = []
+        for idx, item in enumerate(result):
+            devices.append({'id': result[idx][0], 'naam': result[idx][1],
+                            'max': result[idx][2], 'merk': result[idx][3], 'type': result[idx][4]})
+
+        return render_template('households.html', household=household, devices=devices)
+    # else:
+    #     return render_template('error.html', error='Unauthorized Access')
+
+    except Exception as e:
+        return json.dumps({'error': str(e)})
+    finally:
+        cursor.close()
+        conn.close()
 
 
 @app.route('/getDevicesByHouseHold', methods=['POST'])
@@ -147,13 +166,16 @@ def getDevicesByHouseHold():
 
             conn = mysql.connect()
             cursor = conn.cursor()
-            cursor.callproc('sp_getDevicesByHousehold', (_household))
+
+            getDevicesQuery = 'SELECT * FROM huishouden WHERE gebruiker_fk =%s'
+            cursor.execute(getDevicesQuery, _household)
             result = cursor.fetchone()
             households = []
 
             while result is not None:
                 households.append(
-                    {'id': result[0][0], 'postcode': result[0][1], 'huisnummer': result[0][2], 'grootte': result[0][3]})
+                    {'id': result[0][0], 'postcode': result[0][1],
+                     'huisnummer': result[0][2], 'grootte': result[0][3]})
                 result = cursor.fetchone()
 
             return json.dumps(households)
@@ -162,11 +184,15 @@ def getDevicesByHouseHold():
     except Exception as e:
         return render_template('error.html', error=str(e))
 
-@app.route('/getDevices', methods=['GET'])
+@app.route('/showAddDevice')
+def showAddDevice():
+    return render_template('addDevice.html')
+
+
+@app.route('/getDevices', methods=['POST'])
 def getDevices():
     try:
         if session.get('user'):
-
 
             conn = mysql.connect()
             cursor = conn.cursor()
@@ -187,6 +213,73 @@ def getDevices():
 
 
 
+#
+# Add Devices to the household
+#
 
-if __name__ == "__main__":
-    app.run()
+@app.route('/addDevice', methods=['POST'])
+def addDevice():
+    try:
+        # if session.get('user'):
+            _name = request.form['inputName']
+            _brand = request.form['inputBrand']
+            _type = request.form['inputType']
+
+            print(_name + " " + _brand + " " + _type + " ")
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            addQuery = 'INSERT INTO apparaat(naam, merk, typenummer) VALUES (%s,%s,%s)'
+
+            cursor.execute(addQuery, (_name, _brand, _type))
+            result = cursor.fetchall()
+            if len(result) is 0:
+                conn.commit()
+                return redirect('/showAddDevice')
+            else:
+                return render_template('error.html',error = 'An error occurred!')
+        # else:
+        #     return render_template('error.html', error='Unauthorized Access')
+
+    except Exception as e:
+        return json.dumps({'error': str(e)})
+
+
+
+#
+# Add Devices to the household
+#
+@app.route('/addDeviceToHousehold', methods=['POST'])
+def addDeviceToHousehold():
+    try:
+        if session.get('user'):
+            return redirect('/showHouseHolds')
+        else:
+            return json.dumps({'status': 'An Error occured'})
+    except Exception as e:
+        return json.dumps({'error': str(e)})
+
+@app.route('/removeDeviceById', methods=['POST'])
+def removeDeviceById():
+    try:
+        if session.get('user'):
+            _input = request.form['inputDelete']
+            _household = session.get('householdID')
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.execute(
+                'delete from apparaat_huishouden where apparaat_fk = %s '
+                'and huishouden_fk = %s' % (_input, _household))
+            result = cursor.fetchall()
+
+            if len(result) is 0:
+                conn.commit()
+                return redirect('/showHouseholds')
+            else:
+                return json.dumps({'status': 'An Error occured'})
+        else:
+            return render_template('error.html', error='Unauthorized Access')
+    except Exception as e:
+        return json.dumps({'error': str(e)})
