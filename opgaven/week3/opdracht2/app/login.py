@@ -1,12 +1,8 @@
-from flask import Blueprint
-from flask import Flask, render_template, request, json
-from flask.ext.mysql import MySQL
-from werkzeug import generate_password_hash, check_password_hash
+from flask import render_template
+from app import app
 
-__author__ = 'Lasse'
 
-login = Blueprint('login', __name__)
 
-@login.route("/login")
-def login():
-    return "login"
+@app.route("/test")
+def test():
+    return render_template('index.html')

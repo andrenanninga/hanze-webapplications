@@ -16,30 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `gebruiker`
+-- Table structure for table `apparaat_type`
 --
 
-DROP TABLE IF EXISTS `gebruiker`;
+DROP TABLE IF EXISTS `apparaat_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `gebruiker` (
+CREATE TABLE `apparaat_type` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `naam` varchar(45) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
-  `wachtwoord` varchar(45) DEFAULT NULL,
-  `telefoonnummer` int(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gebruiker`
+-- Dumping data for table `apparaat_type`
 --
 
-LOCK TABLES `gebruiker` WRITE;
-/*!40000 ALTER TABLE `gebruiker` DISABLE KEYS */;
-INSERT INTO `gebruiker` VALUES (64,'Lasse Benninga','lassebenninga@gmail.','pbkdf2:sha1:1000$Bon',12345678),(65,'lars','lars@lars.com','pbkdf2:sha1:1000$vM2',123456678),(66,'test','test@test.com','test',12345678);
-/*!40000 ALTER TABLE `gebruiker` ENABLE KEYS */;
+LOCK TABLES `apparaat_type` WRITE;
+/*!40000 ALTER TABLE `apparaat_type` DISABLE KEYS */;
+INSERT INTO `apparaat_type` VALUES (1,'zonnepaneel'),(2,'windmolen'),(3,'overig');
+/*!40000 ALTER TABLE `apparaat_type` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-06  0:43:02
+-- Dump completed on 2015-10-07 18:40:25

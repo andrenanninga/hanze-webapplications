@@ -16,30 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `apparaat`
+-- Table structure for table `gebruiker`
 --
 
-DROP TABLE IF EXISTS `apparaat`;
+DROP TABLE IF EXISTS `gebruiker`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `apparaat` (
+CREATE TABLE `gebruiker` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `naam` varchar(64) DEFAULT NULL,
-  `max` int(11) DEFAULT NULL,
-  `merk` varchar(45) DEFAULT NULL,
-  `typenummer` bigint(20) DEFAULT NULL,
+  `naam` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `wachtwoord` varchar(45) DEFAULT NULL,
+  `telefoonnummer` int(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `apparaat`
+-- Dumping data for table `gebruiker`
 --
 
-LOCK TABLES `apparaat` WRITE;
-/*!40000 ALTER TABLE `apparaat` DISABLE KEYS */;
-INSERT INTO `apparaat` VALUES (1,'roeimachine',20,NULL,3),(2,'zonnepaneel op dak',4000,NULL,1),(3,'mobiel zonnepaneel',100,NULL,1),(4,'groot zonnepaneel',6000,NULL,1),(5,'windmolen op dak',4500,NULL,2),(6,'windmolen in tuin',4200,NULL,2),(7,'windmolen op akker',6000,NULL,2),(9,'test',NULL,'test',1),(11,'abc',NULL,'abc',1),(12,'123',NULL,'123',123);
-/*!40000 ALTER TABLE `apparaat` ENABLE KEYS */;
+LOCK TABLES `gebruiker` WRITE;
+/*!40000 ALTER TABLE `gebruiker` DISABLE KEYS */;
+INSERT INTO `gebruiker` VALUES (64,'Lasse Benninga','lassebenninga@gmail.','pbkdf2:sha1:1000$Bon',12345678),(65,'lars','lars@lars.com','pbkdf2:sha1:1000$vM2',123456678),(66,'test','test@test.com','test',12345678);
+/*!40000 ALTER TABLE `gebruiker` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-06  0:43:02
+-- Dump completed on 2015-10-07 18:40:26
