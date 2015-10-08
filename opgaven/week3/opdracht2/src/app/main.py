@@ -118,38 +118,38 @@ def validateLogin():
 @app.route('/showHouseholds')
 def showHouseHolds():
     try:
-        # if session.get('user'):
-        #     _user = session.get('user')
-        # TODO change this to user
-        _user = '66'
-        session['user'] = _user
+        if session.get('user'):
+            _user = session.get('user')
 
-        conn = mysql.connect()
-        cursor = conn.cursor()
+            conn = mysql.connect()
+            cursor = conn.cursor()
 
-        # Get household with userID
-        cursor.execute('select * from huishouden where gebruiker_fk =%s' % (_user))
-        result = cursor.fetchone()
+            # Get household with userID
+            cursor.execute('select * from huishouden where gebruiker_fk =%s' % (_user))
+            result = cursor.fetchone()
 
-        # Set householdID for session
-        session['householdID'] = result[0]
-        household = {
-            'postcode': result[3],
-            'huisnummer': result[2],
-            'grootte': result[1],
-        }
+            if result is None:
+                return render_template('households.html')
 
-        cursor.callproc('sp_getDevicesByUser', [_user])
-        result = cursor.fetchall()
+            # Set householdID for session
+            session['householdID'] = result[0]
+            household = {
+                'postcode': result[3],
+                'huisnummer': result[2],
+                'grootte': result[1],
+            }
 
-        devices = []
-        for idx, item in enumerate(result):
-            devices.append({'id': result[idx][0], 'naam': result[idx][1],
-                            'max': result[idx][2], 'merk': result[idx][3], 'type': result[idx][4]})
+            cursor.callproc('sp_getDevicesByUser', [_user])
+            result = cursor.fetchall()
 
-        return render_template('households.html', household=household, devices=devices)
-    # else:
-    #     return render_template('error.html', error='Unauthorized Access')
+            devices = []
+            for idx, item in enumerate(result):
+                devices.append({'id': result[idx][0], 'naam': result[idx][1],
+                                'max': result[idx][2], 'merk': result[idx][3], 'type': result[idx][4]})
+
+            return render_template('households.html', household=household, devices=devices)
+        else:
+            return render_template('error.html', error='Unauthorized Access')
 
     except Exception as e:
         return json.dumps({'error': str(e)})
