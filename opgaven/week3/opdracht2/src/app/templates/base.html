@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Hanze NRG</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	</head>
+	<body>
+		<div class="container">
+			<header class="header">
+			{% if current_user.is_authenticated %}
+				<nav>
+					<ul class="nav nav-pills pull-right">
+						<li role="presentation" class="active"><a href="/">Home</a></li>
+						<li role="presentation"><a href="/showLogin">Inloggen</a></li>
+						<li role="presentation"><a href="{{ url_for('logout') }}">uitloggen</a></li>
+					</ul>
+				</nav>
+				{% endif %}
+				<h1><a href="/">Hanze NRG</a></h1>
+				<hr>
+			</header>
+
+			{% with messages = get_flashed_messages(with_categories=true) %}
+				{% if messages %}
+					{% for category, message in messages %}
+						<div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+
+			{% block content %}{% endblock %}
+		</div>
+	</body>
+</html>	

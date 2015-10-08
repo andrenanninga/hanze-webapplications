@@ -1,0 +1,12 @@
+{% import 'households/device.html' as device %}
+
+{% macro single(household) %}
+	<div class="household">
+		<h2>Huishouden: {{ household.postcode }} {{ household.housenumber }}</h2>
+		<hr>
+
+		{% if household.devices %}
+			{{ device.table(household.devices) }}
+		{% endif %}
+	</div>
+{% endmacro %}

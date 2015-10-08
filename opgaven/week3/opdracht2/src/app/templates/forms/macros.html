@@ -1,0 +1,15 @@
+{% macro form_group(field) %}
+  {% set classes = 'form-control ' + kwargs.pop('class', '') %}
+
+  <div class="form-group {% if field.errors%}has-error{% endif %}">
+    {{ field.label(class='control-label col-sm-2') }}
+    <div class="col-sm-6">
+      {{ field(class=classes, **kwargs) }}
+    </div>
+    <div class="col-sm-4">
+    {% for error in field.errors %}
+      <span class="help-block">{{ error }}</span>
+    {% endfor %}
+    </div>
+  </div>
+{% endmacro %}

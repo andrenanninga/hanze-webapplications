@@ -1,0 +1,26 @@
+{% macro single(device) %}
+	<div class="device">
+
+	</div>
+{% endmacro %}
+
+{% macro table(devices) %}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Naam</th>
+				<th>Max</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for device in devices %}
+				<tr>
+					<td>{{ device.id }}</td>
+					<td>{{ device.name }}</td>
+					<td>{{ device.max }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endmacro %}

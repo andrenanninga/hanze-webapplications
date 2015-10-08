@@ -6,8 +6,8 @@ RUN apt-get -y update
 # install mysql
 RUN apt-get install -y mysql-server libmysqlclient-dev
 
-# install python2.7
-RUN apt-get install --no-install-recommends -y -q build-essential python2.7 python2.7-dev python-pip git
+# install python3.4
+RUN apt-get install --no-install-recommends -y -q build-essential python2.7 python2.7-dev python3.4 python3.4-dev python-pip git
 RUN pip install -U pip
 RUN pip install virtualenv
 
