@@ -17,6 +17,7 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
 
+
 @app.route("/")
 def main():
     return render_template('index.html')
@@ -221,18 +222,20 @@ def getDevices():
 def addDevice():
     try:
         # if session.get('user'):
-            _name = request.form['inputName']
-            _brand = request.form['inputBrand']
-            _type = request.form['inputType']
+        _name = request.form['inputName']
+        _brand = request.form['inputBrand']
+        _type = request.form['inputType']
+        _user = '66'
 
-            print(_name + " " + _brand + " " + _type + " ")
+        if _name and _brand and _type:
 
             conn = mysql.connect()
             cursor = conn.cursor()
+            addQuery = 'START TRANSACTION; INSERT INTO apparaat(naam, merk, apparaat_type_fk)' \
+                       ' VALUES (%s,%s,%s); INSERT INTO apparaat_huishouden(huishouden_fk, apparaat_fk)' \
+                       'VALUES (%s, (SELECT LAST_INSERTED_ID())) COMMIT;'
 
-            addQuery = 'INSERT INTO apparaat(naam, merk, typenummer) VALUES (%s,%s,%s)'
-
-            cursor.execute(addQuery, (_name, _brand, _type))
+            cursor.execute(addQuery, (_name, _brand, _type, _user))
             result = cursor.fetchall()
             if len(result) is 0:
                 conn.commit()
@@ -242,8 +245,11 @@ def addDevice():
         # else:
         #     return render_template('error.html', error='Unauthorized Access')
 
+        else:
+            return json.dumps({'html': '<span>Enter the required fields</span>'})
+
     except Exception as e:
-        return json.dumps({'error': str(e)})
+        return render_template({'': str(e)})
 
 
 

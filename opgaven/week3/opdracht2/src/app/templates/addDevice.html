@@ -27,7 +27,7 @@
             <h3 class="text-muted">NRG Web</h3>
         </div>
         <section>
-            <form class="form-horizontal" method="post" action="/addDevice">
+            <form class="form-horizontal" method="POST" action="/addDevice">
                 <fieldset>
                     
                     <!-- Form Name -->
@@ -37,7 +37,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="txtName">Naam</label>
                         <div class="col-md-4">
-                            <input id="txtTitle" name="inputName" type="text"  class="form-control input-md">
+                            <input id="txtTitle" name="inputName" type="text"  class="form-control input-md" required>
                         </div>
                     </div>
                     
@@ -45,14 +45,18 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="txtBrand">Merk</label>
                         <div class="col-md-4">
-                            <input class="form-control" id="txtBrand" name="inputBrand"></input>
+                            <input class="form-control" id="txtBrand" name="inputBrand" required></input>
                         </div>
                     </div>
-                    <!-- input -->
+                    <!-- select -->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="txtType">Type</label>
+                        <label class="col-md-4 control-label" for="inputType">Type</label>
                         <div class="col-md-4">
-                            <input class="form-control" id="txtType" name="inputType"></input>
+                            <select  class="form-control" id="inputType" name="inputType">
+                                <option value="0">Zonnepaneel</option>
+                                <option value="1">Windmolen</option>
+                                <option value="2">Overig</option>
+                            </select>
                         </div>
                     </div>
                     <!-- Button -->
@@ -73,5 +77,4 @@
         
     </div>
 </body>
-
 </html>
