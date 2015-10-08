@@ -39,5 +39,5 @@ EXPOSE 5000
 # expose mysql port
 EXPOSE 3306
 
-# run startup script
+# run setup script
 CMD /flask/scripts/setup.sh && echo "\nrun '/flask/scripts/start.sh' to start flask\n" && /bin/bash
