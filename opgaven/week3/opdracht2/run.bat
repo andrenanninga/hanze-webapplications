@@ -14,12 +14,14 @@ set directory=%~p0
 :: replace backslashes with forward slashes
 set directory=%directory:\=/%
 
-:: set `workdir` as "/"+`drive`+`directory`+"src"
-set workdir=/%drive%%directory%src
+:: set `srcdir` as "/"+`drive`+`directory`+"src"
+set srcdir=/%drive%%directory%src
 
-:: run docker
-docker run^
-	-it^
-	-p 5000:5000^
-	-v %workdir%:/flask^
-	hanze-nrg
+:: save full command to run docker
+set command=docker run^ -it -p 5000:5000 -v %srcdir%:/flask/src hanze-nrg
+
+:: echo command for manual use
+echo %command%
+
+:: run command
+%command%
