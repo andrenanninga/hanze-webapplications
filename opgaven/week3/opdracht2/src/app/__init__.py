@@ -14,3 +14,6 @@ from app import main
 
 from app.users.views import mod as usersModule
 app.register_blueprint(usersModule)
+
+from app.households.views import mod as householdsModule
+app.register_blueprint(householdsModule)
