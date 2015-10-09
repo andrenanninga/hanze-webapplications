@@ -8,6 +8,7 @@ set drive=%drive:~0,1%
 set drive=%drive:C=c%
 set drive=%drive:D=d%
 set drive=%drive:E=e%
+set drive=%drive:F=f%
 
 :: set `directory` as current path without drive
 set directory=%~p0
