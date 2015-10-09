@@ -37,9 +37,10 @@ class Device(db.Model):
     name = db.Column('naam', db.String(64))
     max = db.Column('max', db.Integer)
 
-    def __init__(self, name=None, max=None):
+    def __init__(self, name=None, max=None, households=None):
         self.name = name
         self.max = max
+        self.households = households
 
     def __repr__(self):
         return '<Device %r>' % (self.name)
