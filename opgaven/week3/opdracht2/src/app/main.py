@@ -43,14 +43,17 @@ def userHome():
 @app.route('/showHouseholds')
 def showHouseHolds():
     try:
+
+        conn = mysql.connect()
+        cursor = conn.cursor()
+
         if session.get('user'):
             _user = session.get('user')
 
-            conn = mysql.connect()
-            cursor = conn.cursor()
+
 
             # Get household with userID
-            cursor.execute('select * from huishouden where gebruiker_fk =%s' % (_user))
+            cursor.execute('select * from huishouden where gebruiker_fk =%s' % _user)
             result = cursor.fetchone()
 
             if result is None:
