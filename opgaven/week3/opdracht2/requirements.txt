@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-app
-=======
 chardet==2.0.1
 colorama==0.2.5
->>>>>>> origin/master
 Flask==0.10.1
 Flask-Login==0.3.2
 Flask-SQLAlchemy==2.0
