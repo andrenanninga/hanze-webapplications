@@ -1,25 +1,14 @@
 from app import app
-import os
-from flask import Flask, render_template, request, json, redirect, session
+from flask import Flask, render_template
+from flask.ext.login import login_required, current_user
+from app.users.models import User
+from app.households.models import Household, Device
 
-from flask.ext.mysql import MySQL
-
-__author__ = 'Lasse'
-
-app.secret_key = os.urandom(24)
-mysql = MySQL()
-
-# MySQL configurations
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
-app.config['MYSQL_DATABASE_DB'] = 'nrg'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-mysql.init_app(app)
-
-
-
-@app.route("/")
+@app.route('/')
+@app.route('/index')
+@login_required
 def main():
+<<<<<<< HEAD
     return render_template('index.html')
 
 
@@ -214,3 +203,6 @@ def removeDeviceById():
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
         return json.dumps({'error': str(e)})
+=======
+    return render_template('index.html', user=current_user)
+>>>>>>> origin/master

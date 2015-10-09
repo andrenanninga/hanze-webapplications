@@ -4,4 +4,4 @@ echo "Starting mysql"
 /etc/init.d/mysql start
 
 echo "Starting flask"
-python /flask/src/run.py
+python -B /flask/src/run.py
