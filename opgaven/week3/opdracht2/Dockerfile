@@ -1,13 +1,16 @@
-FROM ubuntu:14.04
+FROM ubuntu
 
 # install packages
-RUN apt-get -y update
+RUN apt-get -y update && apt-get -y upgrade
+
+# set as noninteractive to prevent prompts
+RUN export DEBIAN_FRONTEND=noninteractive
 
 # install mysql
-RUN apt-get install -y mysql-server libmysqlclient-dev
+RUN apt-get install -q -y mysql-server libmysqlclient-dev
 
-# install python3.4
-RUN apt-get install --no-install-recommends -y -q build-essential python2.7 python2.7-dev python3.4 python3.4-dev python-pip git
+# install python
+RUN apt-get install -y build-essential python2.7 python2.7-dev python3.4 python-pip git
 RUN pip install -U pip
 RUN pip install virtualenv
 
