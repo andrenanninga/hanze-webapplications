@@ -17,3 +17,6 @@ app.register_blueprint(usersModule)
 
 from app.households.views import mod as householdsModule
 app.register_blueprint(householdsModule)
+
+from app.measurements.views import mod as measurementsModule
+app.register_blueprint(measurementsModule)

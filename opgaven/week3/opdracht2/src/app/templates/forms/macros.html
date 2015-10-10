@@ -13,3 +13,25 @@
     </div>
   </div>
 {% endmacro %}
+
+{% macro form_group_radio(field) %}
+  {% set classes = 'form-control ' + kwargs.pop('class', '') %}
+
+  <div class="row">
+    <div class="col-sm-2">
+      {{field.label}}
+    </div>
+    <div class="col-sm-6">
+      {% for subfield in field %}
+        <div class="radio {% if field.errors%}has-error{% endif %}">
+          <label> 
+            {{subfield}} {{subfield.label.text}}
+          </label>
+        </div>
+      {% endfor %}
+      {% for error in field.errors %}
+        <span class="help-block">{{ error }}</span>
+      {% endfor %}
+    </div>
+  </div>
+{% endmacro %}

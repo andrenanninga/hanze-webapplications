@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-  {% from 'forms/macros.html' import form_group %}
+  {% from 'forms/macros.html' import form_group, form_group_radio %}
   <form class="form-horizontal" method="post">
     {{ form.csrf_token }}
 
-    {{ form_group(form.name) }}
-    {{ form_group(form.maximum) }}
+    {{ form_group_radio(form.device) }}
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">

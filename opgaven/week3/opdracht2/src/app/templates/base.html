@@ -11,8 +11,8 @@
 			{% if current_user.is_authenticated %}
 				<nav>
 					<ul class="nav nav-pills pull-right">
-						<li role="presentation" class="active"><a href="/">Home</a></li>
-						<li role="presentation"><a href="/showLogin">Inloggen</a></li>
+						<li role="presentation"><a href="/">Home</a></li>
+						<li role="presentation"><a href="{{ url_for('households.index') }}">Mijn huishoudens</a></li>
 						<li role="presentation"><a href="{{ url_for('logout') }}">uitloggen</a></li>
 					</ul>
 				</nav>
