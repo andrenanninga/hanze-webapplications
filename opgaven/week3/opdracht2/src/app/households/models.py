@@ -37,12 +37,14 @@ class Device(db.Model):
 
     id = db.Column('id', db.Integer, primary_key=True)
     name = db.Column('naam', db.String(64))
+    category = db.Column('categorie', db.String(64))
     max = db.Column('max', db.Integer)
 
     households = association_proxy('householdDevices', 'household')
 
-    def __init__(self, name=None, max=None, households=None):
+    def __init__(self, name=None, category=None, max=None, households=None):
         self.name = name
+        self.category = category
         self.max = max
         self.households = households
 
@@ -64,5 +66,5 @@ class HouseholdDevice(db.Model):
         self.device_id = device.id
 
     def __repr__(self):
-        return '<HouseholdDevice %r %r>' % (self.household, self.device)
+        return '<HouseholdDevice %r %r %r>' % (self.id, self.household, self.device)
 

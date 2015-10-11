@@ -8,5 +8,4 @@ from app.households.models import Household, Device
 @app.route('/index')
 @login_required
 def main():
-    print(current_user.households[0].householdDevices)
     return render_template('index.html', user=current_user)
