@@ -8,7 +8,7 @@
 		<div class="col-md-2 col-md-offset-4">
 			<select class="form-control" name="area">
 				<option value="local">Lokaal</option>
-				<option value="global">Provinciaal</option>
+				<option value="global" selected>Provinciaal</option>
 			</select>
 		</div>
 		<div class="col-md-3">
@@ -20,11 +20,17 @@
 		<div class="col-md-3">
 			<select class="form-control" name="devices">
 				{% for device in devices %}
-					<option value={{ device.id }}>{{ device.name }}</option>
+					<option value={{ device.id }} {% if device_id == device.id %}selected{% endif %}>{{ device.name }}</option>
 				{% endfor %}
 			</select>
 		</div>
 	</div>
 
 	<script src="/static/js/measurements.js"></script>
+
+	<style>
+		.c3-target-mijn-apparaat .c3-lines path {
+			stroke-width: 2;
+		}
+	</style>
 {% endblock %}

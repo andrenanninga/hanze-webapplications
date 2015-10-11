@@ -10,6 +10,7 @@
 			<tr>
 				<th>Naam</th>
 				<th>Max</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -17,6 +18,7 @@
 				<tr>
 					<td>{{ device.name }}</td>
 					<td>{{ device.max }}</td>
+					<td><a href="{{ url_for('measurements.index', device_id=device.id) }}">Metingen</a></td>
 				</tr>
 			{% endfor %}
 		</tbody>

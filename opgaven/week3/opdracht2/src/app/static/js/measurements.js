@@ -39,9 +39,13 @@ function loadMeasurements(device, comparison, area) {
 				x: 'tijd',
 				columns: [
 					['tijd'].concat(times),
-					['mijn apparaat'].concat(_.pluck(data.measurements.single, 'average')),
-					['gemiddelde'].concat(_.pluck(data.measurements.average, 'average'))
+					['gemiddelde'].concat(_.pluck(data.measurements.average, 'average')),
+					['mijn apparaat'].concat(_.pluck(data.measurements.single, 'average'))
 				],
+				colors: {
+					'gemiddelde': '#34C8ED',
+					'mijn apparaat': '#F14C5E'
+				}
 			},
 			axis: {
 				x: {

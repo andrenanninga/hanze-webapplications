@@ -1,5 +1,6 @@
 from app import db
 from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy.ext.hybrid import hybrid_property
 
 # device_household = db.Table('apparaat_huishouden',
 #     db.Column('id', db.Integer, primary_key=True),
@@ -64,6 +65,18 @@ class HouseholdDevice(db.Model):
     def __init__(self, household=None, device=None):
         self.household_id = household.id
         self.device_id = device.id
+
+    @hybrid_property
+    def name(self):
+        return self.device.name
+
+    @hybrid_property
+    def category(self):
+        return self.device.category
+
+    @hybrid_property
+    def max(self):
+        return self.device.max
 
     def __repr__(self):
         return '<HouseholdDevice %r %r %r>' % (self.id, self.household, self.device)
