@@ -22,7 +22,7 @@
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
     "nedb": "^1.2.0",
-    "react": "^0.13.3",
+    "react": "^15.6.2",
     "react-fontawesome": "^0.3.3",
     "react-motion": "^0.2.7",
     "react-router": "^0.13.3",
