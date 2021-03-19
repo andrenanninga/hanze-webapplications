@@ -7,7 +7,7 @@ Flask-WTF==0.12
 funcy==1.6
 html5lib==0.999
 itsdangerous==0.24
-Jinja2==2.8
+Jinja2==2.11.3
 MarkupSafe==0.23
 mysql==0.0.1
 MySQL-python==1.2.5
